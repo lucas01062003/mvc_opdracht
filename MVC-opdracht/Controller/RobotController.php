@@ -32,7 +32,7 @@ class RobotController
         $robots = $this->robotModal->getRobots();
 
         header('Content-Type: application/json');
-        return json_encode($this->htmlTableModal->generateOptions($robots));
+        return json_encode($this->htmlTableModal->generateSelectOptions($robots));
     }
 
     public function createRobot()
@@ -41,7 +41,7 @@ class RobotController
             http_response_code(405); // Method Not Allowed
             return 'Invalid request method.';
         }
-        $this->robotModal->createRobot(null, $_POST['robot-name'], $_POST['robot-owner'], $_POST['robot-weapon'], $_POST['robot-armour'], $_POST['robot-propulsion']);
+        $this->robotModal->saveRobot(null, $_POST['robot-name'], $_POST['robot-owner'], $_POST['robot-weapon'], $_POST['robot-armour'], $_POST['robot-propulsion']);
         return json_encode('success');
     }
 
@@ -51,12 +51,13 @@ class RobotController
             http_response_code(405); // Method Not Allowed
             return 'Invalid request method.';
         }
-        $this->robotModal->createRobot($_POST['robot-id'], $_POST['robot-name'], $_POST['robot-owner'], $_POST['robot-weapon'], $_POST['robot-armour'], $_POST['robot-propulsion']);
+        $this->robotModal->saveRobot($_POST['robot-id'], $_POST['robot-name'], $_POST['robot-owner'], $_POST['robot-weapon'], $_POST['robot-armour'], $_POST['robot-propulsion']);
         return json_encode('success');
     }
 
     public function removeRobot($id)
     {
+
         if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
             http_response_code(405); // Method Not Allowed
             return 'Invalid request method.';

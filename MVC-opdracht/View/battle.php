@@ -25,7 +25,11 @@ include "base.php"; ?>
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-lg-9">
-            <h1 class="mb-3 text-center">Wedstrijd toevoegen / aanpassen</h1>
+            <h1 class="mb-3 text-center" >Wedstrijd toevoegen / aanpassen</h1>
+            <h6 class="text-center">(robots en winnaar zijn permanent)</h6>
+            <br>
+            <br>
+
             <form method="post" id="battle-form" action="alter/">
                 <div class="row g-3">
                     <div class="col-md-6">
@@ -96,7 +100,7 @@ include "base.php"; ?>
             console.error(error);
         });
 
-    function deletebattle(id) {
+    function deleteRobot(id) {
         id = id.replace("delete-", "");
 
         const config = {
@@ -108,7 +112,7 @@ include "base.php"; ?>
 
         axios.delete('http://mvc-opdracht.test/battle/delete/', config)
             .then(function (response) {
-                this.location.reload();
+                // this.location.reload();
             })
             .catch(function (error) {
                 console.error(error);

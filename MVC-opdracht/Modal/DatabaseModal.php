@@ -97,6 +97,7 @@ class DatabaseModal
         if ($persist) {
             $this->closeConnection();
         }
+
         return $data;
     }
 
@@ -181,6 +182,7 @@ class DatabaseModal
             $this->closeConnection();
         }
     }
+
     public function findLastCreatedRecord($tableName, $orderByColumn = 'id', $persist = false)
     {
         if ($persist) {
@@ -216,7 +218,6 @@ class DatabaseModal
         return $data;
     }
 
-
     public function createRecord($tableName, $data, $persist = false)
     {
         if ($persist) {
@@ -247,7 +248,6 @@ class DatabaseModal
             $this->closeConnection();
         }
     }
-
 
     public function openConnection()
     {

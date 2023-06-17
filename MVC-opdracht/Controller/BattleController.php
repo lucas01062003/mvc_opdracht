@@ -39,6 +39,7 @@ class BattleController
 
     public function createBattle()
     {
+        if ( $_POST['battle-winner'] !==  $_POST['r-1-select'] && $_POST['battle-winner'] !==  $_POST['r-2-select']) return json_encode('failed');
         $this->battleModal->createBattle(
             null,
             $_POST['battle-date'],
@@ -52,10 +53,20 @@ class BattleController
 
     public function updateBattle()
     {
+        $this->battleModal->updateBattle(
+            $_POST['battle-id'],
+            $_POST['battle-date'],
+            $_POST['battle-type']
+        );
+        return json_encode('success');
     }
 
-    public function removeBattle()
+    public function removeBattle($id)
     {
+        $this->battleModal->deleteBattle($id, true);
+        header('Content-Type: application/json');
+        return json_encode("success");
     }
+
 
 }

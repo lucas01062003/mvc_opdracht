@@ -14,37 +14,44 @@ use App\Modal\DatabaseModal;
 
 class BattleRepository
 {
-    public $db;
-    public $robotRepository;
+    private $db;
+    private $robotRepository;
     public function __construct()
     {
         $this->db = new DatabaseModal();
         $this->robotRepository = new RobotRepository();
     }
 
-    public function findAll(){
+    public function findAll($persist = false){
 
         $battles = [];
-        $this->db->openConnection();
+        if ($persist) $this->db->openConnection();
         $rawBattles = $this->db->findAllByTable('battle');
 
         foreach ($rawBattles as $rawBattle) {
-            $winningRobot = $this->robotRepository->findOneById($rawBattle['winner_id']);
-
-            $battle = new Battle($rawBattle['id'], $rawBattle['date'], $rawBattle['type'], null, $winningRobot);
-
-            $rawBattleRobots = $this->db->findRelatedRecords('battle', 'robot', 'robot_battle', $battle->getId());
-            $robots = [];
-            foreach ($rawBattleRobots as $rawBattleRobot){
-                $robot = new Robot($rawBattleRobot['id'], $rawBattleRobot['name'], $rawBattleRobot['owner'], $rawBattleRobot['weapon'], $rawBattleRobot['armour'], $rawBattleRobot['propulsion']);
-                $robots[] = $robot;
-            }
-            $battle->setRobots($robots);
-
-
-            $battles[] = $battle;
+            $battles[] = $this->findOneById($rawBattle['id']);;
         }
-        $this->db->closeConnection();
+        if ($persist) $this->db->closeConnection();
         return $battles;
+    }
+
+    public function findOneById($id, $persist=false){
+        if ($persist) $this->db->openConnection();
+
+        $rawBattle = $this->db->findBy("battle", ["id" => $id])[0];
+        $winningRobot = $this->robotRepository->findOneById($rawBattle['winner_id']);
+
+        $battle = new Battle($rawBattle['id'], $rawBattle['date'], $rawBattle['type'], null, $winningRobot);
+
+        $rawBattleRobots = $this->db->findRelatedRecords('battle', 'robot', 'robot_battle', $battle->getId());
+        $robots = [];
+        foreach ($rawBattleRobots as $rawBattleRobot){
+            $robot = new Robot($rawBattleRobot['id'], $rawBattleRobot['name'], $rawBattleRobot['owner'], $rawBattleRobot['weapon'], $rawBattleRobot['armour'], $rawBattleRobot['propulsion']);
+            $robots[] = $robot;
+        }
+        $battle->setRobots($robots);
+
+        if ($persist) $this->db->closeConnection();
+        return $battle;
     }
 }

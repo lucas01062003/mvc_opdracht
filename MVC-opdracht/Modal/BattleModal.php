@@ -28,7 +28,7 @@ class BattleModal
 
     public function getBattles()
     {
-        $rawBattles = $this->battleRepository->findAll();
+        $rawBattles = $this->battleRepository->findAll(true );
 
         $battles = null;
         foreach ($rawBattles as $rawBattle) {
@@ -58,7 +58,12 @@ class BattleModal
         $this->db->closeConnection();
     }
 
-    public function deleteBattle()
+    public function updateBattle($id, $date, $type){
+
+    }
+
+    public function deleteBattle($id, $persist = false)
     {
+        $this->db->delete('battle', $id, $persist);
     }
 }

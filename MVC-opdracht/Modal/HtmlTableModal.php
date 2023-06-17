@@ -35,7 +35,7 @@ class HtmlTableModal
         return $htmlData; //return finished table
     }
 
-    public function generateOptions($optionData){
+    public function generateSelectOptions($optionData){
         if ($optionData === null) return "";
         $htmlData = "";
         foreach ($optionData as $option){

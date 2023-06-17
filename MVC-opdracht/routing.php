@@ -43,7 +43,7 @@ switch ($request) {
         break;
     case '/battle/alter/':
         if ($_POST['battle-id'] != null) {
-//            echo $battleController->updateBattle();
+            echo $battleController->updateBattle();
         } else {
             echo $battleController->createBattle();
         }
@@ -52,7 +52,7 @@ switch ($request) {
     case '/battle/delete/':
         $encodedId = isset($_SERVER['HTTP_X_DELETE_ID']) ? $_SERVER['HTTP_X_DELETE_ID'] : null;
         $decodedId = urldecode($encodedId);
-        echo $battleController->removeRobot($decodedId);
+        echo $battleController->removeBattle($decodedId);
         break;
     default:
         http_response_code(404);

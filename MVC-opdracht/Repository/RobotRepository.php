@@ -10,7 +10,7 @@ use App\Entity\Robot;
 
 class RobotRepository
 {
-    public $db;
+    private $db;
 
     public function __construct()
     {
@@ -23,7 +23,6 @@ class RobotRepository
         $rawRobots = $this->db->findAllByTable('robot', true);
 
         foreach ($rawRobots as $rawRobot) {
-//            var_dump($rawRobot);
             $robot = new Robot(
                 $rawRobot['id'],
                 $rawRobot['name'],
@@ -43,27 +42,13 @@ class RobotRepository
         return new Robot($rawWinningRobot['id'], $rawWinningRobot['name'], $rawWinningRobot['owner'], $rawWinningRobot['weapon'], $rawWinningRobot['armour'], $rawWinningRobot['propulsion']);
     }
 
-//    public function findAll()
-//    {
-//        $robots = [];
-//        $this->db->openConnection();
-//        $rawRobots = $this->db->findAllByTable('robot');
-//
-//        foreach ($rawRobots as $rawRobot) {
-//            $robot = new Robot($rawRobot['id'], $rawRobot['name'], $rawRobot['owner']);
-//
-////          $rawRobotComponents = $this->db->findBy('robot_component', ["id" => ""]);
-//            $robotComponents = $this->db->findRelatedRecords(
-//                "robot",
-//                "component",
-//                "robot_component",
-//                $robot->getId()
-//            );
-//
-//            $robot->setComponents($robotComponents);
-//            $robots[] = $robot;
+//    public function findBattlesWithRobot($robot, $persist = false){
+//        $rawBattlesWithRobot = $this->db->findRelatedRecords("robot", "battle", "robot_battle", $robot->getId(), $persist);
+//        foreach ($rawBattlesWithRobot as $rawRobot){
+//            $battles[] = new Robot($rawRobot['id'], $r);
 //        }
-//        $this->db->closeConnection();
-//        return $robots;
+//        var_dump($rawBattlesWithRobot);
+//        die();
 //    }
+
 }

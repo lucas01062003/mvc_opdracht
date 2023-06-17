@@ -79,7 +79,7 @@ include "base.php"; ?>
 
     function deleteRobot(id) {
         id = id.replace("delete-", "");
-
+        console.log(id);
         const config = {
             headers: {
                 'Content-Type': 'application/json',
