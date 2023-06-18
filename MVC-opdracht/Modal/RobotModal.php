@@ -4,19 +4,16 @@ namespace App\Modal;
 include  "./Repository/RobotRepository.php";
 include  "./Repository/RobotBattleRepository.php";
 use App\Entity\Robot;
-use App\Repository\RobotBattleRepository;
 use App\Repository\RobotRepository;
 
 class RobotModal
 {
     private $robotRepository;
     private $db;
-    private $robotBattleRepository;
     public function __construct()
     {
         $this->db = new DatabaseModal();
         $this->robotRepository = new RobotRepository();
-        $this->robotBattleRepository = new RobotBattleRepository();
     }
 
     public function getRobots(){
@@ -40,4 +37,5 @@ class RobotModal
         $this->db->delete('robot', $id);
         $this->db->closeConnection();
     }
+
 }

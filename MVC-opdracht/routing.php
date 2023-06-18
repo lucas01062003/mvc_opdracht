@@ -19,6 +19,7 @@ switch ($request) {
     case '/battle/':
         require __DIR__ . $viewDir . 'battle.php';
         break;
+
     case '/robot/get/':
         echo $robotController->getRobots();
         break;
@@ -34,9 +35,7 @@ switch ($request) {
         header("Location: /robot");
         break;
     case '/robot/delete/':
-        $encodedId = isset($_SERVER['HTTP_X_DELETE_ID']) ? $_SERVER['HTTP_X_DELETE_ID'] : null;
-        $decodedId = urldecode($encodedId);
-        echo $robotController->removeRobot($decodedId);
+        echo $robotController->removeRobot();
         break;
     case '/battle/get/':
         echo $battleController->getBattles();
@@ -50,9 +49,10 @@ switch ($request) {
         header("Location: /battle");
         break;
     case '/battle/delete/':
-        $encodedId = isset($_SERVER['HTTP_X_DELETE_ID']) ? $_SERVER['HTTP_X_DELETE_ID'] : null;
-        $decodedId = urldecode($encodedId);
-        echo $battleController->removeBattle($decodedId);
+        echo $battleController->removeBattle();
+        break;
+    case '/robot/score/':
+        echo $battleController->getScoreBoard();
         break;
     default:
         http_response_code(404);

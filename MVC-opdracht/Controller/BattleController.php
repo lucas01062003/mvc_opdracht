@@ -3,26 +3,18 @@
 namespace App\Controller;
 
 include "./Modal/BattleModal.php";
-//
-//use App\Modal\BattleModal;
-//use App\Modal\RobotModal;
-//use App\Modal\HtmlTableModal;
-
 
 use App\Modal\BattleModal;
 use App\Modal\HtmlTableModal;
-use App\Modal\RobotModal;
 
 class BattleController
 {
-    private $robotModal;
     private $battleModal;
     private $htmlTableModal;
 
     public function __construct()
     {
         $this->htmlTableModal = new HtmlTableModal();
-        $this->robotModal = new RobotModal();
         $this->battleModal = new BattleModal();
     }
 
@@ -61,11 +53,18 @@ class BattleController
         return json_encode('success');
     }
 
-    public function removeBattle($id)
+    public function removeBattle()
     {
+        $encodedId = isset($_SERVER['HTTP_X_DELETE_ID']) ? $_SERVER['HTTP_X_DELETE_ID'] : null;
+        $id = urldecode($encodedId);
         $this->battleModal->deleteBattle($id, true);
         header('Content-Type: application/json');
         return json_encode("success");
+    }
+
+    public function getScoreBoard()
+    {
+        return $this->battleModal->getScoreBoard();
     }
 
 

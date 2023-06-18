@@ -249,6 +249,40 @@ class DatabaseModal
         }
     }
 
+    public function updateRecord($tableName, $data, $recordId, $persist = false)
+    {
+        if ($persist) {
+            $this->openConnection();
+        }
+
+        if ($this->conn === null) {
+            die("Query failed: " . $this->conn->error);
+        }
+
+        $tableName = $this->conn->real_escape_string($tableName);
+
+        $updatePairs = array();
+        foreach ($data as $column => $value) {
+            $column = $this->conn->real_escape_string($column);
+            $value = $this->conn->real_escape_string($value);
+            $updatePairs[] = "`$column` = '$value'";
+        }
+
+        $updateList = implode(', ', $updatePairs);
+
+        $recordId = $this->conn->real_escape_string($recordId);
+        $query = "UPDATE `$tableName` SET $updateList WHERE `id` = '$recordId'";
+        $result = $this->conn->query($query);
+
+        if ($result === false) {
+            die("Query failed: " . $this->conn->error);
+        }
+
+        if ($persist) {
+            $this->closeConnection();
+        }
+    }
+
     public function openConnection()
     {
         $this->conn = new \mysqli($this->servername, $this->username, $this->password, $this->database);
@@ -258,5 +292,6 @@ class DatabaseModal
     {
         $this->conn->close();
     }
+
 
 }

@@ -10,7 +10,7 @@ class HtmlTableModal
     {
     }
 
-    public function generateTableBody($tableData)
+    public function generateTableBody($tableData, $type = 'entity')
     {
         $htmlData = "";
         if ($tableData === null) return "";
@@ -24,6 +24,10 @@ class HtmlTableModal
                 $htmlData .= $tableCelData;
                 $htmlData .= "</td>";
             }
+            if ($type == 'array'){
+                $htmlData .= "</tr>";
+                continue;
+            }
             if (is_array($tableRow)){
                 $rowId = $tableRow['id'];
             }else{
@@ -34,6 +38,7 @@ class HtmlTableModal
         }
         return $htmlData; //return finished table
     }
+
 
     public function generateSelectOptions($optionData){
         if ($optionData === null) return "";
@@ -47,4 +52,5 @@ class HtmlTableModal
         }
         return $htmlData;
     }
+    
 }

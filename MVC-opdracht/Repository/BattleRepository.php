@@ -2,10 +2,6 @@
 
 namespace App\Repository;
 
-//use App\Modal\DatabaseModal;
-//use App\Entity\Robot;
-//use App\Entity\Battle;
-
 include "./Entity/Battle.php";
 
 use App\Entity\Battle;
@@ -46,7 +42,8 @@ class BattleRepository
         $rawBattleRobots = $this->db->findRelatedRecords('battle', 'robot', 'robot_battle', $battle->getId());
         $robots = [];
         foreach ($rawBattleRobots as $rawBattleRobot){
-            $robot = new Robot($rawBattleRobot['id'], $rawBattleRobot['name'], $rawBattleRobot['owner'], $rawBattleRobot['weapon'], $rawBattleRobot['armour'], $rawBattleRobot['propulsion']);
+
+            $robot = new Robot($rawBattleRobot['robot_id'], $rawBattleRobot['name'], $rawBattleRobot['owner'], $rawBattleRobot['weapon'], $rawBattleRobot['armour'], $rawBattleRobot['propulsion']);
             $robots[] = $robot;
         }
         $battle->setRobots($robots);

@@ -42,13 +42,4 @@ class RobotRepository
         return new Robot($rawWinningRobot['id'], $rawWinningRobot['name'], $rawWinningRobot['owner'], $rawWinningRobot['weapon'], $rawWinningRobot['armour'], $rawWinningRobot['propulsion']);
     }
 
-//    public function findBattlesWithRobot($robot, $persist = false){
-//        $rawBattlesWithRobot = $this->db->findRelatedRecords("robot", "battle", "robot_battle", $robot->getId(), $persist);
-//        foreach ($rawBattlesWithRobot as $rawRobot){
-//            $battles[] = new Robot($rawRobot['id'], $r);
-//        }
-//        var_dump($rawBattlesWithRobot);
-//        die();
-//    }
-
 }

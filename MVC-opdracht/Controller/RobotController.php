@@ -55,8 +55,10 @@ class RobotController
         return json_encode('success');
     }
 
-    public function removeRobot($id)
+    public function removeRobot()
     {
+        $encodedId = isset($_SERVER['HTTP_X_DELETE_ID']) ? $_SERVER['HTTP_X_DELETE_ID'] : null;
+        $id = urldecode($encodedId);
 
         if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
             http_response_code(405); // Method Not Allowed
